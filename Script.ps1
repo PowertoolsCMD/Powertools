@@ -39,9 +39,9 @@ function Show-Choco {
     Write-Host "4. Geek Uninstaller"
     Write-Host "5. KeypassX"
     Write-Host "6. Winrar"
-    Write-Host "6. Putty"
-    Write-Host "6. Seleccionar paquete manualmente"
-    Write-Host "7. Volver al menu principal"
+    Write-Host "7. Putty"
+    Write-Host "8. Seleccionar paquete manualmente"
+    Write-Host "9. Volver al menu principal"
     Write-Host "==================================="
 }
 function Menu {
