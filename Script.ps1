@@ -117,14 +117,14 @@ function MenuNmap {
     do {
         Show-MenuNmap
         $choice = Read-Host "Seleccione una opcion (1-6)"
-        $target = Read-Host "Selecciona la ip o la subred para escanear"
-        
+        $target = "";
+        if( $choice -ne "6"){ $target = Read-Host "Selecciona la ip o la subred para escanear"}
         switch ($choice) {
-            "1" { Start-Process "nmap" -ArgumentList "$target" }
-            "2" { Start-Process "nmap" -ArgumentList "-p- $target" }
-            "3" { Start-Process "nmap" -ArgumentList "-O $target" }
-            "4" { Start-Process "nmap" -ArgumentList "-A $target" }
-            "5" { Start-Process "nmap" -ArgumentList "-sn $target" }
+            "1" { Start-Process "cmd.exe" -ArgumentList "/k nmap $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
+            "2" { Start-Process "cmd.exe" -ArgumentList "/k nmap -p- $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
+            "3" { Start-Process "cmd.exe" -ArgumentList "/k nmap -O $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
+            "4" { Start-Process "cmd.exe" -ArgumentList "/k nmap -A $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
+            "5" { Start-Process "cmd.exe" -ArgumentList "/k nmap -sn $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
             "6" {}
         }
     } while ($choice -ne "6")
