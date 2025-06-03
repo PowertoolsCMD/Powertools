@@ -1,10 +1,10 @@
 # Powertools
 
-This repository contains a PowerShell script designed to streamline and enhance your command-line experience.
+Este repositorio contiene un script de PowerShell diseñado para optimizar y mejorar tu experiencia en la línea de comandos.
 
-## 📥 How to Use
+## 📥 Cómo usar
 
-To run the script directly in PowerShell, use the following command:
+Para ejecutar el script directamente en PowerShell, utiliza el siguiente comando:
 
 ```powershell
 irm https://raw.githubusercontent.com/PowertoolsCMD/Powertools/refs/heads/main/Script.ps1 | iex
