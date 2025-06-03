@@ -10,7 +10,8 @@ function Show-Menu {
     Write-Host "3. Instalar Chocolatey"
     Write-Host "4. Instalar usando Chocolatey"
     Write-Host "5. Navegadores"
-    Write-Host "6. Salir"
+    Write-Host "6. Analizadores de red (nmap)"
+    Write-Host "7. Salir"
     Write-Host "==================================="
 }
 
@@ -44,42 +45,36 @@ function Show-Choco {
     Write-Host "9. Volver al menu principal"
     Write-Host "==================================="
 }
+function Show-MenuNmap {
+    Clear-Host
+    Write-Host "==================================="
+    Write-Host "           Comandos nmap           "
+    Write-Host "==================================="
+    Write-Host "1. Cliente Basico"
+    Write-Host "2. Cliente Completo"
+    Write-Host "3. Deteccion de OS"
+    Write-Host "4. Cliente agresivo"
+    Write-Host "5. Escaneo de red"
+    Write-Host "6. Volver al menu principal"
+    Write-Host "==================================="
+
+}
 function Menu {
     do {
         Show-Menu
-        $choice = Read-Host "Seleccione una opcion (1-6)"
+        $choice = Read-Host "Seleccione una opcion (1-7)"
 
         switch ($choice) {
-            "1" {
-                $Command = "irm https://get.activated.win | iex"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"
-            }
-            "2" {
-                $Command = "irm 'https://christitus.com/win' | iex"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"
-            }
-            "3" {
-                $Command = "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
-                $proc = Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command" -PassThru
-                Wait-Process -Id $proc.id
-                $Command = "choco install chocolateygui"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"
-            }
-            "4" {
-                MenuChoco
-            }
-            "5" {
-                Menu2
-            }
-            "6"{
-                Write-Host "Adios"
-            }
-            default {
-                Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red
-                Start-Sleep -Seconds 1
-            }
+            "1" { $Command = "irm https://get.activated.win | iex"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"}
+            "2" { $Command = "irm 'https://christitus.com/win' | iex"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"}
+            "3" { $Command = "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"; $proc = Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command" -PassThru; Wait-Process -Id $proc.id; $Command = "choco install chocolateygui"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"}
+            "4" { MenuChoco}
+            "5" { Menu2}
+            "6" { MenuNmap}
+            "7" { Write-Host "Adios"}
+            default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
-    } while ($choice -ne "6")
+    } while ($choice -ne "7")
 }
 
 function Menu2 {
@@ -88,25 +83,12 @@ function Menu2 {
         $choice = Read-Host "Seleccione una opcion (1-5)"
 
         switch ($choice) {
-            "1" {
-                Start-Process "https://www.google.es/chrome/"
-            }
-            "2" {
-                Start-Process "https://www.mozilla.org/en-US/firefox/new/"
-            }
-            "3" {
-                Start-Process "https://www.opera.com/es?msockid=134549aba99364d835955c54a83b65a0"
-            }
-            "4" {
-                Start-Process "https://brave.com/download/"
-            }
-            "5"{
-
-            }
-            default {
-                Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red
-                Start-Sleep -Seconds 1
-            }
+            "1" { Start-Process "https://www.google.es/chrome/"}
+            "2" { Start-Process "https://www.mozilla.org/en-US/firefox/new/"}
+            "3" { Start-Process "https://www.opera.com/es?msockid=134549aba99364d835955c54a83b65a0"}
+            "4" { Start-Process "https://brave.com/download/"}
+            "5"{}
+            default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
     } while ($choice -ne "5")
 }
@@ -117,53 +99,35 @@ function MenuChoco {
         $choice = Read-Host "Seleccione una opcion (1-9)"
 
         switch ($choice) {
-            "1" {
-                $choice = "choco install angryip -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "2" {
-                $choice = "choco install adobreader -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "3" {
-                $choice = "choco install rufus -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "4" {
-                $choice = "choco install revo-uninstaller -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "5" {
-                $choice = "choco install geekuninstaller -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "6" {
-                $choice = "choco install winrar -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "7" {
-                $choice = "choco install putty.install -y"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"
-            }
-            "8" {
-                $inputs = Read-Host "Ingrese el nombre del paquete a instalar"
-                    if ([string]::IsNullOrWhiteSpace($inputs)) {
-                        Write-Host "No se ha ingresado un nombre de paquete." -ForegroundColor Red
-                        Pause
-                        continue
-                    }
-                $Command = "choco install $inputs -y; exit"
-                Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command -y"
-            }
-            "9"{
-
-            }
-            default {
-                Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red
-                Start-Sleep -Seconds 1
-            }
+            "1" { $choice = "choco install angryip -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "2" { $choice = "choco install adobreader -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "3" { $choice = "choco install rufus -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "4" { $choice = "choco install revo-uninstaller -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "5" { $choice = "choco install geekuninstaller -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "6" { $choice = "choco install winrar -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "7" { $choice = "choco install putty.install -y"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $choice"}
+            "8" { $inputs = Read-Host "Ingrese el nombre del paquete a instalar"; if ([string]::IsNullOrWhiteSpace($inputs)) {Write-Host "No se ha ingresado un nombre de paquete." -ForegroundColor Red; Pause; continue}; $Command = "choco install $inputs -y; exit"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command -y"}
+            "9"{}
+            default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
     } while ($choice -ne "9")
+}
+
+function MenuNmap {
+    do {
+        Show-MenuNmap
+        $choice = Read-Host "Seleccione una opcion (1-6)"
+        $target = Read-Host "Selecciona la ip o la subred para escanear"
+        
+        switch ($choice) {
+            "1" { Start-Process "nmap" -ArgumentList "$target" }
+            "2" { Start-Process "nmap" -ArgumentList "-p- $target" }
+            "3" { Start-Process "nmap" -ArgumentList "-O $target" }
+            "4" { Start-Process "nmap" -ArgumentList "-A $target" }
+            "5" { Start-Process "nmap" -ArgumentList "-sn $target" }
+            "6" {}
+        }
+    } while ($choice -ne "6")
 }
 
 # Helper function to pause
