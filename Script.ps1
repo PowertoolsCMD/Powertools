@@ -120,7 +120,7 @@ function MenuNmap {
         Show-MenuNmap
         $choice = Read-Host "Seleccione una opcion (1-8)"
         $target = "";
-        if( [int]$choice -lt 6){ $target = Read-Host "Selecciona la ip o la subred para escanear"}
+        if($choice -match '^[1-5]$'){ $target = Read-Host "Selecciona la ip o la subred para escanear"}
         switch ($choice) {
             "1" { Start-Process "cmd.exe" -ArgumentList "/k nmap $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
             "2" { Start-Process "cmd.exe" -ArgumentList "/k nmap -p- $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
@@ -130,6 +130,7 @@ function MenuNmap {
             "6" { $command = 'Write-Host ""; (Test-Connection -ComputerName $env:computername -count 1).ipv4address.IPAddressToString; Write-Host ""; Read-Host "Presiona enter para continuar..."'; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $command" }
             "7" { $command = "Write-Host ''; Invoke-RestMethod -Uri https://api.ipify.org; Write-Host ''; Read-Host 'Presiona enter para continuar...'"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $command" }
             "8" {}
+            default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
     } while ($choice -ne "8")
 }
