@@ -10,7 +10,7 @@ function Show-Menu {
     Write-Host "3. Instalar Chocolatey"
     Write-Host "4. Instalar usando Chocolatey"
     Write-Host "5. Navegadores"
-    Write-Host "6. Analizadores de red (nmap)"
+    Write-Host "6. Herramientas de red"
     Write-Host "7. Salir"
     Write-Host "==================================="
 }
@@ -48,14 +48,16 @@ function Show-Choco {
 function Show-MenuNmap {
     Clear-Host
     Write-Host "==================================="
-    Write-Host "           Comandos nmap           "
+    Write-Host "        Herramientas de red        "
     Write-Host "==================================="
     Write-Host "1. Cliente Basico"
     Write-Host "2. Cliente Completo"
     Write-Host "3. Deteccion de OS"
     Write-Host "4. Cliente agresivo"
     Write-Host "5. Escaneo de red"
-    Write-Host "6. Volver al menu principal"
+    Write-Host "6. Cual es mi IP local"
+    Write-Host "7. Cual es mi IP externa"
+    Write-Host "8. Volver al menu principal"
     Write-Host "==================================="
 
 }
@@ -116,18 +118,20 @@ function MenuChoco {
 function MenuNmap {
     do {
         Show-MenuNmap
-        $choice = Read-Host "Seleccione una opcion (1-6)"
+        $choice = Read-Host "Seleccione una opcion (1-8)"
         $target = "";
-        if( $choice -ne "6"){ $target = Read-Host "Selecciona la ip o la subred para escanear"}
+        if( [int]$choice -lt 6){ $target = Read-Host "Selecciona la ip o la subred para escanear"}
         switch ($choice) {
-            "1" { Start-Process "cmd.exe" -ArgumentList "/k nmap $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
-            "2" { Start-Process "cmd.exe" -ArgumentList "/k nmap -p- $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
-            "3" { Start-Process "cmd.exe" -ArgumentList "/k nmap -O $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
-            "4" { Start-Process "cmd.exe" -ArgumentList "/k nmap -A $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
-            "5" { Start-Process "cmd.exe" -ArgumentList "/k nmap -sn $target & echo. & echo Press ENTER to exit... & pause >nul & exit" }
-            "6" {}
+            "1" { Start-Process "cmd.exe" -ArgumentList "/k nmap $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
+            "2" { Start-Process "cmd.exe" -ArgumentList "/k nmap -p- $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
+            "3" { Start-Process "cmd.exe" -ArgumentList "/k nmap -O $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
+            "4" { Start-Process "cmd.exe" -ArgumentList "/k nmap -A $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
+            "5" { Start-Process "cmd.exe" -ArgumentList "/k nmap -sn $target & echo. & echo Presiona Enter para salir... & pause >nul & exit" }
+            "6" { $command = 'Write-Host ""; (Test-Connection -ComputerName $env:computername -count 1).ipv4address.IPAddressToString; Write-Host ""; Read-Host "Presiona enter para continuar..."'; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $command" }
+            "7" { $command = "Write-Host ''; Invoke-RestMethod -Uri https://api.ipify.org; Write-Host ''; Read-Host 'Presiona enter para continuar...'"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $command" }
+            "8" {}
         }
-    } while ($choice -ne "6")
+    } while ($choice -ne "8")
 }
 
 # Helper function to pause
