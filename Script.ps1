@@ -5,17 +5,18 @@ function Show-Menu {
     Write-Host "==================================="
     Write-Host "        Herramientas utiles        "
     Write-Host "==================================="
-    Write-Host "1. Activacion de windows y Office"
+    Write-Host "1. Activacion de Windows y Office"
     Write-Host "2. Optimizacion e instalacion"
     Write-Host "3. Instalar Chocolatey"
     Write-Host "4. Instalar usando Chocolatey"
     Write-Host "5. Navegadores"
     Write-Host "6. Herramientas de red"
-    Write-Host "7. Salir"
+    Write-Host "7. Abrir Herramientas de Windows"
+    Write-Host "8. Salir"
     Write-Host "==================================="
 }
 
-function Show-Menu2 {
+function Show-MenuNav {
     Clear-Host
     Write-Host "==================================="
     Write-Host "      Paginas web navegadores      "
@@ -25,6 +26,19 @@ function Show-Menu2 {
     Write-Host "3. Opera"
     Write-Host "4. Brave"
     Write-Host "5. Volver al menu principal"
+    Write-Host "==================================="
+}
+function Show-MenuWin {
+    Clear-Host
+    Write-Host "==================================="
+    Write-Host "      Herramientas de Windows      "
+    Write-Host "==================================="
+    Write-Host "1. Administrador de tareas"
+    Write-Host "2. Monitor de recursos"
+    Write-Host "3. Panel de control"
+    Write-Host "4. Editor de registro"
+    Write-Host "5. Herramientas administrativas"
+    Write-Host "6. Volver al menu principal"
     Write-Host "==================================="
 }
 
@@ -64,24 +78,25 @@ function Show-MenuNmap {
 function Menu {
     do {
         Show-Menu
-        $choice = Read-Host "Seleccione una opcion (1-7)"
+        $choice = Read-Host "Seleccione una opcion (1-8)"
 
         switch ($choice) {
             "1" { $Command = "irm https://get.activated.win | iex"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"}
             "2" { $Command = "irm 'https://christitus.com/win' | iex"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"}
             "3" { $Command = "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"; $proc = Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command" -PassThru; Wait-Process -Id $proc.id; $Command = "choco install chocolateygui"; Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -Command $Command"}
             "4" { MenuChoco}
-            "5" { Menu2}
+            "5" { MenuNav}
             "6" { MenuNmap}
-            "7" { Write-Host "Adios"}
+            "7" { MenuWin}
+            "8" { Write-Host "Adios"}
             default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
-    } while ($choice -ne "7")
+    } while ($choice -ne "8")
 }
 
-function Menu2 {
+function MenuNav {
     do {
-        Show-Menu2
+        Show-MenuNav
         $choice = Read-Host "Seleccione una opcion (1-5)"
 
         switch ($choice) {
@@ -93,6 +108,22 @@ function Menu2 {
             default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
     } while ($choice -ne "5")
+}
+function MenuWin {
+    do {
+        Show-MenuWin
+        $choice = Read-Host "Seleccione una opcion (1-6)"
+
+        switch ($choice) {
+            "1" { Start-Process "taskmgr"}
+            "2" { Start-Process "resmon"}
+            "3" { Start-Process "control"}
+            "4" { Start-Process "regedit"}
+            "5" { Start-Process control.exe admintools}
+            "6"{}
+            default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
+        }
+    } while ($choice -ne "6")
 }
 
 function MenuChoco {
