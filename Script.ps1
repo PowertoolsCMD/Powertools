@@ -38,7 +38,8 @@ function Show-MenuWin {
     Write-Host "3. Panel de control"
     Write-Host "4. Editor de registro"
     Write-Host "5. Herramientas administrativas"
-    Write-Host "6. Volver al menu principal"
+    Write-Host "6. Escaneo de disco"
+    Write-Host "7. Volver al menu principal"
     Write-Host "==================================="
 }
 
@@ -120,7 +121,8 @@ function MenuWin {
             "3" { Start-Process "control"}
             "4" { Start-Process "regedit"}
             "5" { Start-Process control.exe admintools}
-            "6"{}
+            "6" { Start-Process "cmd.exe" -ArgumentList "/k sfc /scannow"; Start-Process "cmd.exe" -ArgumentList "/k chkdsk"; Start-Process "cmd.exe" -ArgumentList "/k DISM /Online /Cleanup-Image /RestoreHealth" }
+            "7" {}
             default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
     } while ($choice -ne "6")
