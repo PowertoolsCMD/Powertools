@@ -113,7 +113,7 @@ function MenuNav {
 function MenuWin {
     do {
         Show-MenuWin
-        $choice = Read-Host "Seleccione una opcion (1-6)"
+        $choice = Read-Host "Seleccione una opcion (1-7)"
 
         switch ($choice) {
             "1" { Start-Process "taskmgr"}
@@ -125,7 +125,7 @@ function MenuWin {
             "7" {}
             default {Write-Host "Seleccion invalida, prueba de nuevo." -ForegroundColor Red; Start-Sleep -Seconds 1}
         }
-    } while ($choice -ne "6")
+    } while ($choice -ne "7")
 }
 
 function MenuChoco {
